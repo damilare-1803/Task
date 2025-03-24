@@ -9,6 +9,7 @@ function App() {
     const [priority, setPriority] = useState("top");
     const [deadline, setDeadline] = useState("");
 
+
     const handleTaskChange = (e) => {
         setTask(e.target.value);
     };
@@ -63,6 +64,13 @@ function App() {
     };
 
     const upcomingTasks = tasks.filter((t) => !t.done);
+
+    const money = {
+
+        'currency': 555,
+        'amount': 5888
+    }
+    console.log(money)
 
     return (
         <div className="App">
@@ -151,6 +159,7 @@ function App() {
                     </table>
                 </div>
             </main>
+     
         </div>
     );
 }
