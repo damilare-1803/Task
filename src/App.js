@@ -28,9 +28,16 @@ function App() {
     const addTask = () => {
         if (task.trim() === "" || deadline === "") {
             toast.info("Please enter a task and select a valid deadline.");
+        }
+        const isDuplicate = tasks.some(
+            (t) => t.task.toLowerCase() === task.trim().toLowerCase()
+        );
+    
+        if (isDuplicate) {
+            toast.warning("This task already exists.");
             return;
         }
-
+       
         const selectedDate = new Date(deadline);
         const currentDate = new Date();
 
@@ -76,7 +83,7 @@ return;
 
     const updatedCompleted = completedTasks.filter((t) => t.id !== id);
     setCompletedTasks(updatedCompleted);
-    toast.info("Task deleted.");
+    toast.success("Task deleted successfully!");
 };
 
     const upcomingTasks = tasks.filter((t) => !t.done);
@@ -139,16 +146,16 @@ return;
                                             >
                                                 Mark Done
                                             </button>
-                                        )}
+                                            
+                                        )} 
+                                                     <button
+                                                className="delete-btn"
+                                 onClick={() => deleteTask(t.id)}
+                                >
+                                    Delete
+                                    </button>
+                                           
                                     </td>
-                                    <td>
-  <button
-    className="delete-btn"
-    onClick={() => deleteTask(t.id)}
-  >
-    Delete
-  </button>
-</td>
 
                                 </tr>
                             ))}
