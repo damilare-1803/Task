@@ -28,6 +28,7 @@ function App() {
     const addTask = () => {
         if (task.trim() === "" || deadline === "") {
             toast.info("Please enter a task and select a valid deadline.");
+            return;
         }
         const isDuplicate = tasks.some(
             (t) => t.task.toLowerCase() === task.trim().toLowerCase()
