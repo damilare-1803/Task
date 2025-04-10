@@ -1,6 +1,9 @@
 
 import React, { useState } from "react";
-import "./App.css"; // Import your CSS file here
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
+import "./App.css";
 
 function App() {
     const [tasks, setTasks] = useState([]);
@@ -8,7 +11,7 @@ function App() {
     const [task, setTask] = useState("");
     const [priority, setPriority] = useState("top");
     const [deadline, setDeadline] = useState("");
-
+    const navigate = useNavigate();
 
     const handleTaskChange = (e) => {
         setTask(e.target.value);
@@ -19,32 +22,37 @@ function App() {
     };
  
     const handleDeadlineChange = (e) => {
-        setDeadline(e.target.value);
+                       setDeadline(e.target.value);
     };
 
     const addTask = () => {
         if (task.trim() === "" || deadline === "") {
-            alert("Please enter a task and select a valid deadline.");
+            toast.info("Please enter a task and select a valid deadline.");
             return;
         }
 
         const selectedDate = new Date(deadline);
         const currentDate = new Date();
 
-        if (selectedDate <= currentDate) {
-            alert("Please select a future date for the deadline.");
-            return;
-        }
+        currentDate.setHours(0, 0, 0, 0);
+         selectedDate.setHours(0, 0, 0, 0);
+            
+        
 
-        const newTask = {
-            id: tasks.length + 1,
-            task,
-            priority,
-            deadline,
-            done: false,
-        };
-
-        setTasks([...tasks, newTask]);
+if ( currentDate <= selectedDate ){
+  
+     toast.success("Task added successfully!");
+     const newTask = {
+        id: tasks.length + 1,
+        task,
+        priority,
+        deadline,
+        done: false,
+    };
+    setTasks([...tasks, newTask]);
+return;
+}
+ toast.error("Please select a future date for the deadline.");
 
         setTask("");
         setPriority("top");
@@ -62,21 +70,22 @@ function App() {
             setCompletedTasks([...completedTasks, completedTask]);
         }
     };
+    const deleteTask = (id) => {
+    const updatedTasks = tasks.filter((t) => t.id !== id);
+    setTasks(updatedTasks);
+
+    const updatedCompleted = completedTasks.filter((t) => t.id !== id);
+    setCompletedTasks(updatedCompleted);
+    toast.info("Task deleted.");
+};
 
     const upcomingTasks = tasks.filter((t) => !t.done);
-
-    const money = {
-
-        'currency': 555,
-        'amount': 5888
-    }
-    console.log(money)
-
     return (
         <div className="App">
             <header>
                 <h1>Task Scheduler</h1>
             </header>
+            <button className ="lare" onClick={() =>navigate("/")}> ← Back to Home</button>
             <main>
                 <div className="task-form">
                     <input
@@ -132,6 +141,15 @@ function App() {
                                             </button>
                                         )}
                                     </td>
+                                    <td>
+  <button
+    className="delete-btn"
+    onClick={() => deleteTask(t.id)}
+  >
+    Delete
+  </button>
+</td>
+
                                 </tr>
                             ))}
                         </tbody>
@@ -159,7 +177,7 @@ function App() {
                     </table>
                 </div>
             </main>
-     
+                <ToastContainer position="top-right" autoClose={3000} />
         </div>
     );
 }
