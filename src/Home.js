@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const navigate = useNavigate();
   return (
+    <div class ='flex-box'>
       <div class="home">
       <h1>TASK SCHEDULER.</h1><br></br>
       <p>
@@ -15,6 +16,7 @@ const Home = () => {
       <button class ='dam' onClick={() => navigate("/tasks")}>
         Click here to proceed
       </button>
+       </div>
        </div>
   
   );

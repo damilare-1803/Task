@@ -14,11 +14,16 @@ body {
        height: 12cm;
        width: 20cm;
         text-align: center;
-        margin-left: 11cm;
-        margin-top: 5cm;
+        /* margin-left: 11cm;
+        margin-top: 5cm; */
         border-radius: 2ch;
         padding: 2cm;
-
+    }
+    .flex-box{
+        justify-content: center;
+        align-items: center;
+        display:flex ;
+        height: 100vh;
     }
     .dam {
         margin-left: 0.5cm;
